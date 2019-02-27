@@ -16,8 +16,8 @@ MDT_feedback_graph_normal_curve <- function(perc_correct, x_min = 40, x_max = 16
   q <- q + ggplot2::theme_bw()
   #q <- q + scale_y_continuous(labels = scales::percent, name="Frequency (%)")
   q <- q + ggplot2::scale_y_continuous(labels = NULL)
-  x_axis_lab <- "RAT Score"
-  title <- "Your RAT score"
+  x_axis_lab <- "MDT Score"
+  title <- "Your MDT score"
   fake_IQ <- 100 * perc_correct + 37.5 #(15/24 -> 100)
   main_title <- sprintf("%s: %.0f", title, round(fake_IQ, digits = 0))
   
