@@ -34,8 +34,8 @@ MDT_feedback_with_graph <- function() {
       psychTestR::reactive_page(function(state, ...) {
         results <- psychTestR::get_results(state = state, complete = TRUE, add_session_info = FALSE)
         results <- attr(as.list(results)$MDT$ability, "metadata")$results
-        print(results)
-        print(nrow(results))
+        #print(results)
+        #print(nrow(results))
         
         perc_correct <- (results$ability_WL[nrow(results)] + 2)/4
         sum_score <- sum(results$score)
