@@ -46,8 +46,8 @@ MDT_feedback_with_graph <- function() {
         norm_plot <- MDT_feedback_graph_normal_curve(perc_correct)
         psychTestR::page(
           ui = shiny::div(
+            shiny::p(norm_plot),
             shiny::p(text_finish),
-            norm_plot,
             shiny::p(psychTestR::trigger_button("next", psychTestR::i18n("AMDI_0016_I_0001_1")))
           )
         )
@@ -58,7 +58,7 @@ MDT_feedback_with_graph <- function() {
   
 }
 
-num_items <- 2L
+num_items <- 5L
 take_training <- T
 demo <- F
 
@@ -77,13 +77,13 @@ elts <-
                  state = state)
     }),
   RAT(num_items = num_items, take_training = take_training, feedback = RAT::RAT_feedback_with_graph()),
+  JAJ(num_items = num_items, take_training = take_training, feedback = JAJ::JAJ_feedback_with_graph()),
   psychTestR::one_button_page(
     body = shiny::div(
       shiny::h4("Welcome to the Melodic Memory Test", style = "text-align:center")
     ),
     button_text = "Next"),
   mdt(num_items = num_items, take_training = take_training, feedback = MDT_feedback_with_graph()),
-  JAJ(num_items = num_items, take_training = take_training, feedback = JAJ::JAJ_feedback_with_graph()),
   elt_save_results_to_disk(complete = TRUE),
   reactive_page(
     function(state, ...) {
