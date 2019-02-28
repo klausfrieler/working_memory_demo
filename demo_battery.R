@@ -15,17 +15,17 @@ MDT_feedback_graph_normal_curve <- function(perc_correct, x_min = 40, x_max = 16
                            geom = "area")
   q <- q + ggplot2::theme_bw()
   #q <- q + scale_y_continuous(labels = scales::percent, name="Frequency (%)")
-  q <- q + ggplot2::scale_y_continuous(labels = NULL)
-  x_axis_lab <- "MDT Score"
-  title <- "Your MDT score"
+  #q <- q + ggplot2::scale_y_continuous(labels = NULL)
+  x_axis_lab <- "Melodic Memory Test Score"
+  title <- "Your score"
   fake_IQ <- 100 * perc_correct + 37.5 #(15/24 -> 100)
   main_title <- sprintf("%s: %.0f", title, round(fake_IQ, digits = 0))
   
   q <- q + ggplot2::labs(x = x_axis_lab, y = "")
   q <- q + ggplot2::ggtitle(main_title)
   plotly::ggplotly(q,
-                   width = 300,
-                   height = 300)
+                   width = 600,
+                   height = 450)
 }
 
 MDT_feedback_with_graph <- function() {
@@ -58,8 +58,8 @@ MDT_feedback_with_graph <- function() {
   
 }
 
-num_items <- 1L
-take_training <- F
+num_items <- 2L
+take_training <- T
 demo <- F
 
 elts <- 
@@ -76,8 +76,13 @@ elts <-
       set_global(key = "name", value = answer,
                  state = state)
     }),
-  mdt(num_items = num_items, take_training = take_training, feedback = MDT_feedback_with_graph()),
   RAT(num_items = num_items, take_training = take_training, feedback = RAT::RAT_feedback_with_graph()),
+  psychTestR::one_button_page(
+    body = shiny::div(
+      shiny::h4("Welcome to the Melodic Memory Test", style = "text-align:center")
+    ),
+    button_text = "Next"),
+  mdt(num_items = num_items, take_training = take_training, feedback = MDT_feedback_with_graph()),
   JAJ(num_items = num_items, take_training = take_training, feedback = JAJ::JAJ_feedback_with_graph()),
   elt_save_results_to_disk(complete = TRUE),
   reactive_page(
@@ -89,9 +94,9 @@ elts <-
 run_demo <- function(){
   make_test(
     elts, 
-    opt = psychTestR::test_options(title = "Working Memory Tests Demo",
+    opt = psychTestR::test_options(title = "Music and Memory Demo Battery",
                                    admin_password = "conifer",
-                                   researcher_email = "longgold@gold.uc.ak",
+                                   researcher_email = "longgold@gold.ac.uk",
                                    demo = demo,
                                    languages = "EN")
   )
